@@ -1,6 +1,8 @@
 version: '3.4'
 
 services:
+  
+  #Databases
   stockdb:
     container_name: stockdb
     restart: always
@@ -21,6 +23,13 @@ services:
     ports:
       - "1501:1433"
 
+  basketdb:
+    container_name: basketdb
+    restart: always
+    ports:
+      - "6379:6379"
+
+  #Services
   stock.api:
     container_name: stock.api
     environment:
@@ -28,6 +37,8 @@ services:
       - "ConnectionStrings:DefaultConnection=Server=stockdb;Database=StockDb;uid=sa;Pwd=1Secure*Password1;Trusted_Connection=False;Encrypt=False"
     ports:
       - "8000:80"
+    depends_on:
+      - stockdb
 
   catalog.api:
     environment:
@@ -35,4 +46,6 @@ services:
       - "ConnectionStrings:DefaultConnection=Server=catalogdb;Database=CatalogDb;uid=sa;Pwd=1Secure*Password1;Trusted_Connection=False;Encrypt=False"
     ports:
       - "8001:80"
+    depends_on:
+      - catalogdb
 

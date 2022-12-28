@@ -1,12 +1,17 @@
 version: '3.4'
 
 services:
+
   #Databases
   stockdb:
     image: mcr.microsoft.com/mssql/server:2022-latest
 
   catalogdb:
     image: mcr.microsoft.com/mssql/server:2022-latest
+
+  basketdb:
+    image: redis:alpine
+
 
   #Services
   stock.api:
@@ -21,3 +26,4 @@ services:
       context: .
       dockerfile: Services/Catalog.API/Dockerfile
 
+#volumes:
