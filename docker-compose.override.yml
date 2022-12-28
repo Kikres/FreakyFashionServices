@@ -41,6 +41,7 @@ services:
       - stockdb
 
   catalog.api:
+    container_name: catalog.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:DefaultConnection=Server=catalogdb;Database=CatalogDb;uid=sa;Pwd=1Secure*Password1;Trusted_Connection=False;Encrypt=False"
@@ -49,3 +50,13 @@ services:
     depends_on:
       - catalogdb
 
+
+  basket.api:
+    container_name: Basket.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=basketdb:6379"
+    ports:
+      - "8002:80"
+    depends_on:
+      - basketdb
