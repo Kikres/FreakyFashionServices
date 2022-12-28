@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  stockdb:
+    container_name: stockdb
+    restart: always
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=1Secure*Password1
+      - MSSQL_PID=Express
+    ports:
+      - "1500:1433"
+
+  stock.api:
+    container_name: stock.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=stockdb;Database=StockDb;uid=sa;Pwd=1Secure*Password1;Trusted_Connection=False;Encrypt=False"
+    ports:
+      - "8000:80"

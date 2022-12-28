@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  #Databases
+  stockdb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
+  #Services
+  stock.api:
+    image: ${DOCKER_REGISTRY-}stockapi
+    build:
+      context: .
+      dockerfile: Services/Stock.API/Dockerfile
