@@ -28,3 +28,11 @@ services:
       - "ConnectionStrings:DefaultConnection=Server=stockdb;Database=StockDb;uid=sa;Pwd=1Secure*Password1;Trusted_Connection=False;Encrypt=False"
     ports:
       - "8000:80"
+
+  catalog.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=stockdb;Database=StockDb;uid=sa;Pwd=1Secure*Password1;Trusted_Connection=False;Encrypt=False"
+    ports:
+      - "8001:80"
+
