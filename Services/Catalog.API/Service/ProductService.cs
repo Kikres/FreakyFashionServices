@@ -16,10 +16,12 @@ public class ProductService
         _mapper = mapper;
     }
 
+    public async Task<IEnumerable<ProductDto>> GetProducts() => _mapper.Map<IEnumerable<ProductDto>>(await _productRepository.GetProducts());
+
     public async Task<ProductDto?> CreateProduct(NewProductDto newProductDto)
     {
         var newProduct = _mapper.Map<Product>(newProductDto);
-        newProduct.UrlSlug = newProduct.Name.Replace(" ", "-").Replace("-", "").ToLower();
+        newProduct.UrlSlug = newProduct.Name.Replace("-", "").Replace(" ", "-").ToLower();
         return _mapper.Map<ProductDto>(await _productRepository.CreateProduct(newProduct));
     }
 

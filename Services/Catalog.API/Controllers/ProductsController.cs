@@ -23,8 +23,12 @@ public class ProductsController : ControllerBase
     {
         if (await _productService.ProductExists(newProductDto.Sku)) return Conflict("Product exists");
 
-        var productDto = _productService.CreateProduct(newProductDto);
+        var productDto = await _productService.CreateProduct(newProductDto);
 
         return Created("", productDto);
     }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProductDto>))]
+    public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts() => Ok(await _productService.GetProducts());
 }

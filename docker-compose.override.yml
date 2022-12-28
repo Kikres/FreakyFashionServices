@@ -11,6 +11,16 @@ services:
     ports:
       - "1500:1433"
 
+  catalogdb:
+    container_name: catalogdb
+    restart: always
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=1Secure*Password1
+      - MSSQL_PID=Express
+    ports:
+      - "1501:1433"
+
   stock.api:
     container_name: stock.api
     environment:

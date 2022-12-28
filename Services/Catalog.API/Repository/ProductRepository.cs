@@ -13,6 +13,8 @@ public class ProductRepository
         _context = context;
     }
 
+    public async Task<IEnumerable<Product>> GetProducts() => await _context.Products.ToListAsync();
+
     public async Task<Product?> GetProductById(int id) => await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
 
     public async Task<Product?> GetProductBySku(string sku) => await _context.Products.FirstOrDefaultAsync(p => p.Sku == sku);

@@ -1,5 +1,7 @@
 using Catalog.API.Data;
 using Catalog.API.Mapper;
+using Catalog.API.Repository;
+using Catalog.API.Service;
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.API
@@ -21,6 +23,10 @@ namespace Catalog.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // Add Injection
+            builder.Services.AddScoped<ProductService>();
+            builder.Services.AddScoped<ProductRepository>();
 
             var app = builder.Build();
 

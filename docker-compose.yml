@@ -5,6 +5,9 @@ services:
   stockdb:
     image: mcr.microsoft.com/mssql/server:2022-latest
 
+  catalogdb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
   #Services
   stock.api:
     image: ${DOCKER_REGISTRY-}stockapi
