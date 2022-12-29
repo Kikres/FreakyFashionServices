@@ -9,6 +9,9 @@ services:
   catalogdb:
     image: mcr.microsoft.com/mssql/server:2022-latest
 
+  orderdb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
   basketdb:
     image: redis:alpine
 
