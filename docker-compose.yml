@@ -34,3 +34,10 @@ services:
     build:
       context: .
       dockerfile: Services/Basket.API/Dockerfile
+
+  order.api:
+    image: ${DOCKER_REGISTRY-}orderapi
+    build:
+      context: .
+      dockerfile: Services/Order.API/Dockerfile
+
