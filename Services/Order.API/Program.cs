@@ -32,25 +32,15 @@ namespace Order.API
             builder.Services.AddScoped<BasketCllient>();
 
             // HttpClientFactory preconfig injection
-            if (builder.Environment.IsDevelopment())
+            builder.Services.AddHttpClient<BasketCllient>(client =>
             {
-                builder.Services.AddHttpClient<BasketCllient>(client =>
-                {
-                    client.BaseAddress = new Uri("http://localhost:8002");
-                });
-            }
-            else
-            {
-                builder.Services.AddHttpClient<BasketCllient>(client =>
-                {
-                    client.BaseAddress = new Uri("http://localhost:8002");
-                });
-            }
+                client.BaseAddress = new Uri(builder.Configuration.GetConnectionString("BasketAPI"));
+            });
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsEnvironment("Local"))
+            if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();

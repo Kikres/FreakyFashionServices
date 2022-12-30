@@ -1,6 +1,9 @@
 version: '3.4'
 
 services:
+  #Event bus
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
 
   #Databases
   stockdb:
@@ -41,3 +44,14 @@ services:
       context: .
       dockerfile: Services/Order.API/Dockerfile
 
+  product.aggregator:
+    image: ${DOCKER_REGISTRY-}productaggregator
+    build:
+      context: .
+      dockerfile: Gateways/Product.Aggregator/Dockerfile
+
+  ocelotgateway:
+    image: ${DOCKER_REGISTRY-}ocelotgateway
+    build:
+      context: .
+      dockerfile: Gateways/OcelotGateway/Dockerfile

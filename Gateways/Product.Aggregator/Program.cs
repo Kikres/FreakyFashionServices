@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using Stock.API.Data;
+using Product.Aggregator.Client;
+using Product.Aggregator.Service;
 
-namespace Stock.API
+namespace Product.Aggregator
 {
     public class Program
     {
@@ -11,13 +11,25 @@ namespace Stock.API
 
             // Add services to the container.
 
-            builder.Services.AddDbContext<ApplicationContext>(
-               options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // Add Injection
+            builder.Services.AddScoped<ProductService>();
+            builder.Services.AddScoped<CatalogClient>();
+            builder.Services.AddScoped<StockClient>();
+
+            // HttpClientFactory preconfig injection
+            builder.Services.AddHttpClient<CatalogClient>(client =>
+            {
+                client.BaseAddress = new Uri(builder.Configuration.GetConnectionString("CatalogAPI"));
+            });
+            builder.Services.AddHttpClient<StockClient>(client =>
+            {
+                client.BaseAddress = new Uri(builder.Configuration.GetConnectionString("StockAPI"));
+            });
 
             var app = builder.Build();
 

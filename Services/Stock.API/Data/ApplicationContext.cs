@@ -1,14 +1,14 @@
-﻿using FreakyFashionServices.StockService.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Stock.API.Models;
 
-namespace FreakyFashionServices.StockService.Data;
+namespace Stock.API.Data;
 
 public class ApplicationContext : DbContext
 {
-   public ApplicationContext(DbContextOptions<ApplicationContext> options)
-   : base(options)
-   {
-   }
+    public ApplicationContext(DbContextOptions<ApplicationContext> options)
+    : base(options)
+    {
+    }
 
-   public DbSet<StockLevel> StockLevel { get; set; }
+    public DbSet<StockLevel> StockLevel { get; set; }
 }

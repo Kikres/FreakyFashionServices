@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Order.API": {
+    "Inventory.Aggregator": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -8,7 +8,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5003"
+      "applicationUrl": "http://localhost:5011"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -30,7 +30,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:14861",
+      "applicationUrl": "http://localhost:10475",
       "sslPort": 0
     }
   }

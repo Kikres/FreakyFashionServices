@@ -1,7 +1,14 @@
 version: '3.4'
 
 services:
-  
+  #Event bus  
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
   #Databases
   stockdb:
     container_name: stockdb
@@ -63,7 +70,7 @@ services:
 
 
   basket.api:
-    container_name: Basket.api
+    container_name: basket.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:DefaultConnection=basketdb:6379"
@@ -73,10 +80,38 @@ services:
       - basketdb
 
   order.api:
+    container_name: order.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:DefaultConnection=Server=orderdb;Database=OrderDb;uid=sa;Pwd=1Secure*Password1;Trusted_Connection=False;Encrypt=False"
+      - "ConnectionStrings:BasketAPI=http://basket.api"
     ports:
       - "8003:80"
     depends_on:
       - orderdb
+
+  product.aggregator:
+    container_name: product.aggregator
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:CatalogAPI=http://catalog.api"
+      - "ConnectionStrings:StockAPI=http://stock.api"
+    ports:
+      - "8011:80"
+    depends_on:
+      - order.api
+      - stock.api
+
+
+  ocelotgateway:
+    container_name: ocelotgateway
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8010:80"
+    depends_on:
+      - catalog.api
+      - product.aggregator
+      - basket.api
+      - order.api
+
