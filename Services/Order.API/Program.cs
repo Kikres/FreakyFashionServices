@@ -1,9 +1,8 @@
 using Order.API.Mapper;
-using Microsoft.EntityFrameworkCore;
-using Order.API.Data;
-using Order.API.Repository;
 using Order.API.Service;
 using Order.API.Client;
+using Order.Data.Repository;
+using Order.Processor.Client;
 
 namespace Order.API
 {
@@ -16,10 +15,6 @@ namespace Order.API
             // Add services to the container.
             builder.Services.AddAutoMapper(typeof(ApplicationMappings));
 
-            builder.Services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(
-                builder.Configuration.GetConnectionString("DefaultConnection")
-                ));
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -27,9 +22,10 @@ namespace Order.API
 
             // Add Injection
             builder.Services.AddScoped<OrderService>();
+            builder.Services.AddScoped<BasketService>();
             builder.Services.AddScoped<OrderRepositroy>();
-            builder.Services.AddScoped<CustomerRepositroy>();
             builder.Services.AddScoped<BasketCllient>();
+            builder.Services.AddScoped<EventBus>();
 
             // HttpClientFactory preconfig injection
             builder.Services.AddHttpClient<BasketCllient>(client =>

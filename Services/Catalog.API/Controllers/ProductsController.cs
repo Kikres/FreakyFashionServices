@@ -1,6 +1,5 @@
 ﻿using Catalog.API.Models.Dto;
 using Catalog.API.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.API.Controllers;

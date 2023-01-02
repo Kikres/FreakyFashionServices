@@ -55,3 +55,9 @@ services:
     build:
       context: .
       dockerfile: Gateways/OcelotGateway/Dockerfile
+
+  order.processor:
+    image: ${DOCKER_REGISTRY-}orderprocessor
+    build:
+      context: .
+      dockerfile: Services/Order.Processor/Dockerfile

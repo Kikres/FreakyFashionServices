@@ -84,11 +84,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:DefaultConnection=Server=orderdb;Database=OrderDb;uid=sa;Pwd=1Secure*Password1;Trusted_Connection=False;Encrypt=False"
+      - "ConnectionStrings:RabbitMQ=amqp://guest:guest@rabbitmq:5672"
       - "ConnectionStrings:BasketAPI=http://basket.api"
     ports:
       - "8003:80"
     depends_on:
       - orderdb
+      - basket.api
 
   product.aggregator:
     container_name: product.aggregator
@@ -115,3 +117,9 @@ services:
       - basket.api
       - order.api
 
+  order.processor:
+    container_name: order.processor
+    depends_on:
+      - rabbitmq
+    stdin_open: true
+    tty: true

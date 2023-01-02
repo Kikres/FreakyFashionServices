@@ -22,18 +22,20 @@ public class ProductService
         var stockDtos = await _stockClient.GetStockLevelsBySkus(productDtos.Select(o => o.Sku));
         if (stockDtos == null) return null;
 
-        var ProductFullDtos = productDtos.Join(stockDtos, arg => arg.Sku, arg => arg.Sku,
-        (first, second) => new ProductFullDto
-        {
-            Id = first.Id,
-            Name = first.Name,
-            Description = first.Description,
-            ImageUrl = first.ImageUrl,
-            Price = first.Price,
-            Sku = first.Sku,
-            UrlSlug = first.UrlSlug,
-            Stock = second.Stock
-        });
+        var ProductFullDtos = from p in productDtos
+                              join s in stockDtos on p.Sku equals s.Sku into joined
+                              from s in joined.DefaultIfEmpty()
+                              select new ProductFullDto
+                              {
+                                  Id = p.Id,
+                                  Name = p.Name,
+                                  Description = p.Description,
+                                  ImageUrl = p.ImageUrl,
+                                  Price = p.Price,
+                                  Sku = p.Sku,
+                                  UrlSlug = p.UrlSlug,
+                                  Stock = s?.Stock ?? 0
+                              };
 
         return ProductFullDtos;
     }
